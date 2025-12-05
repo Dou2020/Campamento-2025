@@ -1,0 +1,367 @@
+---
+// Fecha del evento: 7 de diciembre 2025 a las 20:00 (hora Guatemala - America/Guatemala, UTC-6)
+// Usar ISO con offset -06:00 para fijar el timestamp independientemente de la zona del servidor/cliente
+const targetDate = new Date("2025-12-07T20:00:00-06:00").getTime();
+---
+
+<div class="countdown-container">
+	<div class="countdown-wrapper">
+		<div class="countdown-title">
+			<span class="rocket">🚀</span>
+			<h3>¡DESPEGUE EN:</h3>
+			<span class="rocket">🚀</span>
+		</div>
+		<div class="countdown-grid">
+			<div class="countdown-item">
+				<div class="countdown-value" id="days">00</div>
+				<div class="countdown-label">Días</div>
+			</div>
+			<div class="countdown-separator">:</div>
+			<div class="countdown-item">
+				<div class="countdown-value" id="hours">00</div>
+				<div class="countdown-label">Horas</div>
+			</div>
+			<div class="countdown-separator">:</div>
+			<div class="countdown-item">
+				<div class="countdown-value" id="minutes">00</div>
+				<div class="countdown-label">Minutos</div>
+			</div>
+			<div class="countdown-separator">:</div>
+			<div class="countdown-item">
+				<div class="countdown-value" id="seconds">00</div>
+				<div class="countdown-label">Segundos</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script define:vars={{ targetDate }}>
+	function updateCountdown() {
+		const now = new Date().getTime();
+		const distance = targetDate - now;
+
+		if (distance < 0) {
+			document.getElementById('days').textContent = '00';
+			document.getElementById('hours').textContent = '00';
+			document.getElementById('minutes').textContent = '00';
+			document.getElementById('seconds').textContent = '00';
+			return;
+		}
+
+		const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		document.getElementById('days').textContent = String(days).padStart(2, '0');
+		document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+		document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+		document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+	}
+
+	// Actualizar inmediatamente
+	updateCountdown();
+	
+	// Actualizar cada segundo
+	setInterval(updateCountdown, 1000);
+</script>
+
+<style>
+	.countdown-container {
+		width: 100%;
+		padding: 0;
+	}
+
+	.countdown-wrapper {
+		background: rgba(0, 0, 0, 0.3);
+		border: 2px solid rgba(251, 191, 36, 0.6);
+		border-radius: 1.5rem;
+		padding: 2rem 1.5rem;
+		backdrop-filter: blur(15px);
+		box-shadow: 0 8px 32px rgba(251, 191, 36, 0.2), inset 0 0 30px rgba(251, 191, 36, 0.1);
+	}
+
+	.countdown-title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+
+	.countdown-title h3 {
+		font-size: 1.75rem;
+		font-weight: 800;
+		color: #fbbf24;
+		margin: 0;
+		text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+		letter-spacing: 0.1em;
+	}
+
+	.rocket {
+		font-size: 2.5rem;
+		animation: float 2s ease-in-out infinite;
+		filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));
+	}
+
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0) rotate(-5deg);
+		}
+		50% {
+			transform: translateY(-15px) rotate(5deg);
+		}
+	}
+
+	.countdown-grid {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+		gap: 1rem;
+		align-items: center;
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.countdown-item {
+		text-align: center;
+	}
+
+	.countdown-value {
+		font-size: 3rem;
+		font-weight: 900;
+		color: #ffffff;
+		background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.4));
+		padding: 1.25rem 0.75rem;
+		border-radius: 1rem;
+		box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
+		min-width: 90px;
+		border: 2px solid rgba(251, 191, 36, 0.5);
+		transition: all 0.3s ease;
+	}
+
+	.countdown-value:hover {
+		transform: scale(1.05);
+		border-color: #fbbf24;
+		box-shadow: 0 12px 35px rgba(251, 191, 36, 0.4), inset 0 0 30px rgba(255, 255, 255, 0.15);
+	}
+
+	.countdown-label {
+		font-size: 0.95rem;
+		color: #fbbf24;
+		margin-top: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+	}
+
+	.countdown-separator {
+		font-size: 2.5rem;
+		font-weight: 900;
+		color: #fbbf24;
+		text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+		animation: pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.6;
+			transform: scale(0.9);
+		}
+	}
+
+	/* Responsive para tablets (768px - 1024px) */
+	@media (max-width: 1024px) and (min-width: 769px) {
+		.countdown-wrapper {
+			padding: 1.75rem 1.25rem;
+		}
+
+		.countdown-title h3 {
+			font-size: 1.5rem;
+		}
+
+		.rocket {
+			font-size: 2rem;
+		}
+
+		.countdown-value {
+			font-size: 2.5rem;
+			padding: 1rem 0.5rem;
+			min-width: 75px;
+		}
+
+		.countdown-label {
+			font-size: 0.85rem;
+			margin-top: 0.6rem;
+		}
+
+		.countdown-separator {
+			font-size: 2rem;
+		}
+
+		.countdown-grid {
+			gap: 0.75rem;
+		}
+	}
+
+	/* Responsive para tablets pequeñas (640px - 768px) */
+	@media (max-width: 768px) and (min-width: 641px) {
+		.countdown-wrapper {
+			padding: 1.5rem 1rem;
+		}
+
+		.countdown-title h3 {
+			font-size: 1.35rem;
+		}
+
+		.rocket {
+			font-size: 1.75rem;
+		}
+
+		.countdown-grid {
+			gap: 0.6rem;
+		}
+
+		.countdown-value {
+			font-size: 2.25rem;
+			padding: 0.9rem 0.4rem;
+			min-width: 65px;
+		}
+
+		.countdown-label {
+			font-size: 0.8rem;
+			margin-top: 0.5rem;
+		}
+
+		.countdown-separator {
+			font-size: 1.75rem;
+		}
+	}
+
+	/* Responsive para móviles (481px - 640px) */
+	@media (max-width: 640px) and (min-width: 481px) {
+		.countdown-wrapper {
+			padding: 1.25rem 0.85rem;
+			border-radius: 1.25rem;
+		}
+
+		.countdown-title {
+			gap: 0.75rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.countdown-title h3 {
+			font-size: 1.15rem;
+		}
+
+		.rocket {
+			font-size: 1.5rem;
+		}
+
+		.countdown-grid {
+			gap: 0.5rem;
+			max-width: 100%;
+		}
+
+		.countdown-value {
+			font-size: 1.85rem;
+			padding: 0.75rem 0.35rem;
+			min-width: 55px;
+			border-radius: 0.75rem;
+		}
+
+		.countdown-label {
+			font-size: 0.7rem;
+			margin-top: 0.4rem;
+		}
+
+		.countdown-separator {
+			font-size: 1.5rem;
+		}
+	}
+
+	/* Responsive para móviles pequeños (hasta 480px) */
+	@media (max-width: 480px) {
+		.countdown-wrapper {
+			padding: 1rem 0.75rem;
+			border-radius: 1rem;
+			border-width: 1.5px;
+		}
+
+		.countdown-title {
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 1.25rem;
+		}
+
+		.countdown-title h3 {
+			font-size: 0.95rem;
+			width: 100%;
+			order: 2;
+		}
+
+		.rocket {
+			font-size: 1.25rem;
+		}
+
+		.countdown-grid {
+			gap: 0.35rem;
+			grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+		}
+
+		.countdown-value {
+			font-size: 1.5rem;
+			padding: 0.6rem 0.25rem;
+			min-width: 42px;
+			border-radius: 0.6rem;
+		}
+
+		.countdown-label {
+			font-size: 0.6rem;
+			margin-top: 0.35rem;
+			letter-spacing: 0.05em;
+		}
+
+		.countdown-separator {
+			font-size: 1.25rem;
+		}
+	}
+
+	/* Responsive para móviles muy pequeños (hasta 360px) */
+	@media (max-width: 360px) {
+		.countdown-wrapper {
+			padding: 0.85rem 0.5rem;
+		}
+
+		.countdown-title h3 {
+			font-size: 0.85rem;
+		}
+
+		.rocket {
+			font-size: 1rem;
+		}
+
+		.countdown-grid {
+			gap: 0.25rem;
+		}
+
+		.countdown-value {
+			font-size: 1.25rem;
+			padding: 0.5rem 0.2rem;
+			min-width: 38px;
+		}
+
+		.countdown-label {
+			font-size: 0.55rem;
+			margin-top: 0.3rem;
+		}
+
+		.countdown-separator {
+			font-size: 1rem;
+		}
+	}
+</style>
